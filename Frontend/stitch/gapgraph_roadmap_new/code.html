@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GapGraph - Learning Roadmap</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface": "#0e1322",
+              "surface-container-high": "#25293a",
+              "on-background": "#dee1f7",
+              "on-tertiary-container": "#ffdce9",
+              "on-primary-fixed-variant": "#5a00c6",
+              "inverse-on-surface": "#2b3040",
+              "surface-dim": "#0e1322",
+              "outline": "#958da1",
+              "on-error-container": "#ffdad6",
+              "secondary-fixed-dim": "#2fd9f4",
+              "tertiary-fixed-dim": "#ffafd3",
+              "on-primary-fixed": "#25005a",
+              "background": "#0e1322",
+              "surface-variant": "#2f3445",
+              "primary-fixed": "#eaddff",
+              "secondary-container": "#00cbe6",
+              "tertiary-container": "#ae397b",
+              "on-primary-container": "#ede0ff",
+              "on-primary": "#3f008e",
+              "on-secondary-fixed-variant": "#004e5a",
+              "surface-container-highest": "#2f3445",
+              "on-surface-variant": "#ccc3d8",
+              "on-secondary": "#00363e",
+              "on-surface": "#dee1f7",
+              "secondary-fixed": "#a2eeff",
+              "inverse-surface": "#dee1f7",
+              "inverse-primary": "#732ee4",
+              "on-tertiary-fixed-variant": "#85145a",
+              "outline-variant": "#4a4455",
+              "surface-container": "#1a1f2f",
+              "tertiary": "#ffafd3",
+              "tertiary-fixed": "#ffd8e7",
+              "on-tertiary-fixed": "#3d0026",
+              "on-error": "#690005",
+              "primary-container": "#7c3aed",
+              "on-secondary-fixed": "#001f25",
+              "primary-fixed-dim": "#d2bbff",
+              "primary": "#d2bbff",
+              "on-tertiary": "#620040",
+              "error-container": "#93000a",
+              "surface-bright": "#343949",
+              "surface-container-lowest": "#090e1c",
+              "secondary": "#5de6ff",
+              "surface-tint": "#d2bbff",
+              "on-secondary-container": "#00515d",
+              "surface-container-low": "#161b2b",
+              "error": "#ffb4ab"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #0e1322;
+        background-image: radial-gradient(#1a1f2f 1px, transparent 1px);
+        background-size: 24px 24px;
+      }
+      .glass-card {
+        background: rgba(26, 31, 47, 0.7);
+        backdrop-filter: blur(12px);
+      }
+      .pulse-gradient {
+        background: linear-gradient(135deg, #7c3aed 0%, #22d3ee 100%);
+      }
+      .faint-grid {
+        background-image: linear-gradient(#ffffff08 1px, transparent 1px), linear-gradient(90deg, #ffffff08 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+      .circular-gauge {
+        background: conic-gradient(#7c3aed 0% 84%, #1a1f2f 84% 100%);
+      }
+    </style>
+</head>
+<body class="font-body text-on-surface min-h-screen pb-24">
+<!-- Top Navigation Shell -->
+<nav class="bg-slate-900/80 backdrop-blur-md text-violet-400 dark:text-violet-300 font-manrope text-sm font-medium tracking-tight docked full-width top-0 z-50 no-line tonal-shift bg-slate-800/50 shadow-[0_0_20px_rgba(124,58,237,0.08)] flex justify-between items-center w-full px-6 py-3 max-w-full">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold bg-gradient-to-r from-violet-500 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">GapGraph</span>
+<div class="hidden md:flex gap-6">
+<a class="text-slate-400 hover:text-slate-200 transition-colors" href="#">Upload</a>
+<a class="text-slate-400 hover:text-slate-200 transition-colors" href="#">Gap Analysis</a>
+<a class="text-cyan-400 font-bold border-b-2 border-cyan-400 pb-1" href="#">Roadmap</a>
+<a class="text-slate-400 hover:text-slate-200 transition-colors" href="#">Module</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="px-3 py-1 bg-surface-container rounded-full text-secondary font-semibold text-xs border border-secondary/20">Live Readiness: 84%</span>
+<span class="material-symbols-outlined hover:bg-slate-800/50 rounded-lg transition-all p-1 cursor-pointer">account_circle</span>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-6 pt-12">
+<!-- Header Actions -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<h1 class="text-4xl font-extrabold text-primary-container tracking-tight mb-2">Learning Roadmap</h1>
+<p class="text-on-surface-variant text-sm max-w-md">Precision engineering path calibrated for Infrastructure Scalability and Cloud Native compliance.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-xl text-primary font-semibold hover:bg-primary/10 transition-all">
+<span class="material-symbols-outlined text-sm">arrow_back</span> Back
+                </button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-container text-on-primary-container font-bold shadow-lg shadow-primary-container/20 hover:scale-[1.02] transition-transform">
+<span class="material-symbols-outlined text-sm">picture_as_pdf</span> Export PDF
+                </button>
+</div>
+</div>
+<!-- High-Level Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-12">
+<!-- Overall Progress -->
+<div class="md:col-span-4 surface-container rounded-xl p-6 faint-grid relative overflow-hidden group">
+<div class="flex justify-between items-start mb-6">
+<h3 class="text-on-surface-variant uppercase text-[10px] font-bold tracking-[0.2em]">Overall Progress</h3>
+<span class="text-2xl font-black text-secondary">8%</span>
+</div>
+<div class="w-full h-3 bg-surface-container-lowest rounded-full overflow-hidden border border-outline-variant/10">
+<div class="h-full pulse-gradient w-[8%] shadow-[0_0_12px_rgba(124,58,237,0.4)]"></div>
+</div>
+<p class="mt-4 text-xs text-on-surface-variant/70 italic">1 of 12 milestones achieved</p>
+</div>
+<!-- Readiness Gauge -->
+<div class="md:col-span-3 surface-container-low rounded-xl p-6 flex flex-col items-center justify-center text-center">
+<div class="relative w-28 h-28 flex items-center justify-center mb-2">
+<div class="absolute inset-0 circular-gauge rounded-full opacity-20"></div>
+<div class="absolute inset-2 bg-surface-container-low rounded-full flex flex-col items-center justify-center">
+<span class="text-2xl font-black text-primary">84%</span>
+<span class="text-[8px] uppercase tracking-tighter text-on-surface-variant">Readiness</span>
+</div>
+<svg class="absolute inset-0 w-28 h-28 -rotate-90">
+<circle class="drop-shadow-[0_0_8px_rgba(124,58,237,0.5)]" cx="56" cy="56" fill="transparent" r="50" stroke="#7c3aed" stroke-dasharray="314" stroke-dashoffset="50" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+</div>
+<p class="text-[10px] text-on-surface-variant font-medium">Enterprise Benchmarked</p>
+</div>
+<!-- Chart Module -->
+<div class="md:col-span-5 surface-container rounded-xl p-6 faint-grid">
+<h3 class="text-on-surface-variant uppercase text-[10px] font-bold tracking-[0.2em] mb-6">Training Hours per Module</h3>
+<div class="flex items-end justify-between h-24 gap-4 px-2">
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-[#F472B6] rounded-t-lg shadow-[0_0_15px_rgba(244,114,182,0.3)] h-[60%]"></div>
+<span class="text-[8px] text-on-surface-variant truncate w-full text-center">Foundations</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-[#FBBF24] rounded-t-lg shadow-[0_0_15px_rgba(251,191,36,0.3)] h-[85%]"></div>
+<span class="text-[8px] text-on-surface-variant truncate w-full text-center">Practices</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-[#A78BFA] rounded-t-lg shadow-[0_0_15px_rgba(167,139,250,0.3)] h-[45%]"></div>
+<span class="text-[8px] text-on-surface-variant truncate w-full text-center">Specialization</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Roadmap Phases -->
+<div class="space-y-16">
+<!-- Phase 1 -->
+<section>
+<div class="flex items-center gap-4 mb-8">
+<div class="h-[1px] flex-1 bg-gradient-to-r from-transparent to-primary/20"></div>
+<h2 class="text-xl font-bold text-primary flex items-center gap-3">
+<span class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-sm border border-primary/20">01</span>
+                        Phase 1: Critical Foundations
+                    </h2>
+<div class="h-[1px] flex-1 bg-gradient-to-l from-transparent to-primary/20"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card: JS -->
+<div class="surface-container rounded-xl p-5 border-l-4 border-[#FBBF24] flex flex-col justify-between group hover:surface-container-high transition-all">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 bg-[#F7DF1E] rounded-lg p-1.5 flex items-center justify-center">
+<img class="w-full h-full invert" data-alt="JavaScript Official Brand Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA239EmeYAaXb2-VFkRp-m7xonFEPsdkW0KF5sSceGSQkBYHBNYgP48yWYuarzSbdBQADoszrNBkIJxL8_BvaWTJIgR7bBi9DTO8pcTm32JH6yqLcarGTiMODXrvGAPgHLQ4lxr5EmclaM3DTAeTMjp2JkLGhmROue18JexqRdGs8nKLN1h-FTEVqgnfm2ngEKGpjISwSJj8WlmNMbFnc8eEzT7YNNUHUILU-wgaLYH0XHbzXQw6sbq12nxOILTcVUI9YsQo0mXrLro"/>
+</div>
+<div class="w-5 h-5 rounded border-2 border-success flex items-center justify-center bg-emerald-500/20">
+<span class="material-symbols-outlined text-[14px] text-emerald-400 font-bold" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+<h4 class="font-bold text-on-surface mb-1">Modern JavaScript</h4>
+<div class="flex items-center gap-3 mb-4">
+<span class="text-[10px] text-on-surface-variant">18 Hours</span>
+<span class="bg-error-container/20 text-error text-[9px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Critical</span>
+</div>
+</div>
+<div class="space-y-2">
+<button class="w-full py-2 bg-surface-container-lowest hover:bg-surface-container-highest rounded-lg text-[10px] font-medium transition-colors text-left px-3 flex items-center justify-between group">
+                                Master Functional ES6+
+                                <span class="material-symbols-outlined text-[12px] opacity-0 group-hover:opacity-100">launch</span>
+</button>
+</div>
+</div>
+<!-- Card: Docker -->
+<div class="surface-container rounded-xl p-5 border-l-4 border-primary flex flex-col justify-between group hover:surface-container-high transition-all">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 bg-[#2496ED] rounded-lg p-1.5 flex items-center justify-center">
+<img class="w-full h-full invert" data-alt="Docker Container Technology Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA239EmeYAaXb2-VFkRp-m7xonFEPsdkW0KF5sSceGSQkBYHBNYgP48yWYuarzSbdBQADoszrNBkIJxL8_BvaWTJIgR7bBi9DTO8pcTm32JH6yqLcarGTiMODXrvGAPgHLQ4lxr5EmclaM3DTAeTMjp2JkLGhmROue18JexqRdGs8nKLN1h-FTEVqgnfm2ngEKGpjISwSJj8WlmNMbFnc8eEzT7YNNUHUILU-wgaLYH0XHbzXQw6sbq12nxOILTcVUI9YsQo0mXrLro"/>
+</div>
+<div class="w-5 h-5 rounded border-2 border-outline-variant flex items-center justify-center"></div>
+</div>
+<h4 class="font-bold text-on-surface mb-1">Docker Containers</h4>
+<div class="flex items-center gap-3 mb-4">
+<span class="text-[10px] text-on-surface-variant">24 Hours</span>
+<span class="bg-error-container/20 text-error text-[9px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Critical</span>
+</div>
+</div>
+<div class="space-y-2">
+<button class="w-full py-2 bg-surface-container-lowest hover:bg-surface-container-highest rounded-lg text-[10px] font-medium transition-colors text-left px-3 flex items-center justify-between group">
+                                Docker Official Get Started
+                                <span class="material-symbols-outlined text-[12px] opacity-0 group-hover:opacity-100">launch</span>
+</button>
+<button class="w-full py-2 bg-surface-container-lowest hover:bg-surface-container-highest rounded-lg text-[10px] font-medium transition-colors text-left px-3 flex items-center justify-between group">
+                                Container Best Practices
+                                <span class="material-symbols-outlined text-[12px] opacity-0 group-hover:opacity-100">launch</span>
+</button>
+</div>
+</div>
+<!-- Card: DB -->
+<div class="surface-container rounded-xl p-5 border-l-4 border-secondary flex flex-col justify-between group hover:surface-container-high transition-all">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 bg-[#4169E1] rounded-lg p-1.5 flex items-center justify-center">
+<img class="w-full h-full invert" data-alt="PostgreSQL Relational Database Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9xcH2KecuTP1HocASR7V4x5N0Il045Krukn2r9rykxEV_dUy2JNgXqDFlF17kfeOtLISILavhgb3m2pXlnP8G6JqrMqh7v_o4XmvZqzfEXU_gbT_kAJjWAad4WkxQXxrGFIH6g4qqsQKKRytrW1pi171QhQhQyO-DhCo5R0w7W-ER1ESXEiwe2kyM8YbwjoxrXRtDQs-I8Z5wfYw-mtcITf2aar10GKIfFMzl5ASOky6r7fPZlJaCa1L-uqOvgQhCWrSYhZ7RG8zr"/>
+</div>
+<div class="w-5 h-5 rounded border-2 border-outline-variant flex items-center justify-center"></div>
+</div>
+<h4 class="font-bold text-on-surface mb-1">Relational DBs</h4>
+<div class="flex items-center gap-3 mb-4">
+<span class="text-[10px] text-on-surface-variant">16 Hours</span>
+<span class="bg-amber-500/10 text-amber-500 text-[9px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Medium</span>
+</div>
+</div>
+<div class="space-y-2">
+<button class="w-full py-2 bg-surface-container-lowest hover:bg-surface-container-highest rounded-lg text-[10px] font-medium transition-colors text-left px-3 flex items-center justify-between group">
+                                Schema Optimization Guide
+                                <span class="material-symbols-outlined text-[12px] opacity-0 group-hover:opacity-100">launch</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Phase 2 -->
+<section>
+<div class="flex items-center gap-4 mb-8">
+<div class="h-[1px] flex-1 bg-gradient-to-r from-transparent to-primary/20"></div>
+<h2 class="text-xl font-bold text-primary flex items-center gap-3">
+<span class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-sm border border-primary/20">02</span>
+                        Phase 2: Engineering Practices
+                    </h2>
+<div class="h-[1px] flex-1 bg-gradient-to-l from-transparent to-primary/20"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="surface-container rounded-xl p-5 border-l-4 border-primary flex flex-col justify-between group hover:surface-container-high transition-all">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 bg-[#FF4500] rounded-lg p-1.5 flex items-center justify-center">
+<img class="w-full h-full invert" data-alt="Redis Monitoring and Cache Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCk8Tb7iz5vD87INy1iA3IJCCCw2uhi1ucqwZGgRnwH1QnwsqbNBo5kYFsxo90EAfIPw70vd2vF6gmTdtXk26HoVxotamn2AJRNZA0orIyomkTmuxbvz72kkCvalhqmZQf9P_hhjs8NKsjG44BDzp2PmBbajylWZc_WK9aBl7EjoBVpPhcT_nmuPvwCzR1jcz9SflQdgKSTMSOeJrRtAurDAsNCeZDKF3D0ZHT77OU8MTEH5AarU8EhVgDP4H9HEvhJyy-Hgih5aUh"/>
+</div>
+<div class="w-5 h-5 rounded border-2 border-outline-variant flex items-center justify-center"></div>
+</div>
+<h4 class="font-bold text-on-surface mb-1">System Monitoring</h4>
+<div class="flex items-center gap-3 mb-4">
+<span class="text-[10px] text-on-surface-variant">12 Hours</span>
+<span class="bg-error-container/20 text-error text-[9px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Critical</span>
+</div>
+</div>
+<button class="w-full py-2 bg-surface-container-lowest hover:bg-surface-container-highest rounded-lg text-[10px] font-medium transition-colors text-left px-3">Grafana Dashboards</button>
+</div>
+<div class="surface-container rounded-xl p-5 border-l-4 border-secondary flex flex-col justify-between group hover:surface-container-high transition-all">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 bg-[#61DAFB] rounded-lg p-1.5 flex items-center justify-center">
+<img class="w-full h-full invert" data-alt="React Frontend Framework Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA239EmeYAaXb2-VFkRp-m7xonFEPsdkW0KF5sSceGSQkBYHBNYgP48yWYuarzSbdBQADoszrNBkIJxL8_BvaWTJIgR7bBi9DTO8pcTm32JH6yqLcarGTiMODXrvGAPgHLQ4lxr5EmclaM3DTAeTMjp2JkLGhmROue18JexqRdGs8nKLN1h-FTEVqgnfm2ngEKGpjISwSJj8WlmNMbFnc8eEzT7YNNUHUILU-wgaLYH0XHbzXQw6sbq12nxOILTcVUI9YsQo0mXrLro"/>
+</div>
+<div class="w-5 h-5 rounded border-2 border-outline-variant flex items-center justify-center"></div>
+</div>
+<h4 class="font-bold text-on-surface mb-1">Advanced React</h4>
+<div class="flex items-center gap-3 mb-4">
+<span class="text-[10px] text-on-surface-variant">22 Hours</span>
+<span class="bg-amber-500/10 text-amber-500 text-[9px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Medium</span>
+</div>
+</div>
+<button class="w-full py-2 bg-surface-container-lowest hover:bg-surface-container-highest rounded-lg text-[10px] font-medium transition-colors text-left px-3">State Management Pro</button>
+</div>
+</div>
+</section>
+</div>
+<!-- Pagination/Nav Arrows -->
+<div class="mt-20 flex items-center justify-between border-t border-outline-variant/10 pt-8">
+<a class="flex flex-col items-start group" href="#">
+<span class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Previous Screen</span>
+<div class="flex items-center gap-2 text-primary font-bold">
+<span class="material-symbols-outlined group-hover:-translate-x-1 transition-transform">chevron_left</span>
+                    Gap Analysis
+                </div>
+</a>
+<a class="flex flex-col items-end group" href="#">
+<span class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 text-right">Next Screen</span>
+<div class="flex items-center gap-2 text-primary font-bold">
+                    Certification Module
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+</a>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden bg-slate-900/90 backdrop-blur-xl fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 rounded-t-xl shadow-[0_-4px_24px_rgba(0,0,0,0.4)]">
+<a class="flex flex-col items-center justify-center text-indigo-400 p-2" href="#">
+<span class="material-symbols-outlined">cloud_upload</span>
+<span class="text-[10px] font-manrope uppercase tracking-widest mt-1">Upload</span>
+</a>
+<a class="flex flex-col items-center justify-center text-indigo-400 p-2" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-manrope uppercase tracking-widest mt-1">Analysis</span>
+</a>
+<a class="flex flex-col items-center justify-center text-cyan-400 bg-cyan-400/10 rounded-xl p-2 animate-pulse-subtle scale-110" href="#">
+<span class="material-symbols-outlined">route</span>
+<span class="text-[10px] font-manrope uppercase tracking-widest mt-1">Roadmap</span>
+</a>
+<a class="flex flex-col items-center justify-center text-indigo-400 p-2" href="#">
+<span class="material-symbols-outlined">view_module</span>
+<span class="text-[10px] font-manrope uppercase tracking-widest mt-1">Module</span>
+</a>
+</nav>
+<!-- Footer -->
+<footer class="bg-slate-950 w-full py-8 no-line tonal-shift border-t border-slate-800/30 flex flex-col items-center gap-4 px-8 mt-12">
+<div class="flex gap-6 mb-2">
+<a class="text-slate-500 hover:text-cyan-300 transition-colors opacity-80 hover:opacity-100" href="#">YouTube</a>
+<a class="text-slate-500 hover:text-cyan-300 transition-colors opacity-80 hover:opacity-100" href="#">freeCodeCamp</a>
+<a class="text-slate-500 hover:text-cyan-300 transition-colors opacity-80 hover:opacity-100" href="#">MIT</a>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-cyan-400 font-semibold">GapGraph AI</span>
+<span class="font-manrope text-xs text-slate-500">© 2024 Precision in Growth.</span>
+</div>
+</footer>
+</body></html>

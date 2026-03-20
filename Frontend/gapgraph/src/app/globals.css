@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #0E1322;
+  --color-surface-container-high: #25293A;
+  --color-surface-container-highest: #2F3445;
+  --color-surface-container: #1A1F2F;
+  --color-surface-container-low: #161B2B;
+  --color-surface-container-lowest: #090E1C;
+  --color-surface-variant: #2F3445;
+  --color-surface-bright: #343949;
+  --color-on-surface: #DEE1F7;
+  --color-on-surface-variant: #CCC3D8;
+  --color-on-background: #DEE1F7;
+  --color-primary: #D2BBFF;
+  --color-primary-container: #7C3AED;
+  --color-on-primary-container: #EDE0FF;
+  --color-primary-fixed-dim: #D2BBFF;
+  --color-secondary: #5DE6FF;
+  --color-secondary-container: #00CBE6;
+  --color-on-secondary-container: #00515D;
+  --color-tertiary: #FFAFD3;
+  --color-tertiary-container: #AE397B;
+  --color-outline: #958DA1;
+  --color-outline-variant: #4A4455;
+  --color-error: #FFB4AB;
+  --color-error-container: #93000A;
+  --color-on-error-container: #FFDAD6;
+  --color-success: #34D399;
+  --color-critical: #EF4444;
+  --color-inverse-primary: #732EE4;
+  --color-inverse-surface: #DEE1F7;
+  --color-inverse-on-surface: #2B3040;
+  --color-warning: #FFD700;
+
+  --font-family-headline: "Manrope", sans-serif;
+  --font-family-body: "Manrope", sans-serif;
+  --font-family-mono: "DM Mono", monospace;
+}
+
+@layer base {
+  body {
+    background-color: #0E1322;
+    background-image: radial-gradient(#1a1f2f 1px, transparent 1px);
+    background-size: 24px 24px;
+    font-family: "Manrope", sans-serif;
+    color: #DEE1F7;
+  }
+
+  ::selection {
+    background: rgba(124, 58, 237, 0.3);
+    color: #EDE0FF;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0E1322;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #4A4455;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #7C3AED;
+  }
+}
+
+@layer utilities {
+  .faint-grid {
+    background-image: linear-gradient(to right, rgba(204, 195, 216, 0.03) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(204, 195, 216, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .pulse-gradient {
+    background: linear-gradient(135deg, #7c3aed 0%, #22d3ee 100%);
+  }
+
+  .gauge-gradient {
+    background: conic-gradient(from 180deg, #7c3aed, #5de6ff, #34d399, #7c3aed);
+  }
+
+  .glass-card {
+    background: rgba(26, 31, 47, 0.7);
+    backdrop-filter: blur(12px);
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+  }
+
+  .custom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #5de6ff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(93, 230, 255, 0.5);
+  }
+  .custom-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #5de6ff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(93, 230, 255, 0.5);
+  }
+
+  @keyframes drawRing {
+    from { stroke-dashoffset: 276; }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
