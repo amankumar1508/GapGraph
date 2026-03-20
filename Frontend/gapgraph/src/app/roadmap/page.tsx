@@ -139,11 +139,17 @@ export default function RoadmapPage() {
 
       {/* Roadmap Phases */}
       <div className="space-y-16">
-        {phases.map((phase, pi) => {
-          const phaseModules = modules.filter((m: any) => m.phase === phase.num);
-          return (
-            <section key={phase.num}>
-              <div className="flex items-center gap-4 mb-8">
+        {modules.length === 0 ? (
+          <div className="text-center py-12 text-on-surface-variant font-medium">
+            No specific courses recommended yet. A perfect match or analysis still needed!
+          </div>
+        ) : (
+          phases.map((phase, pi) => {
+            const phaseModules = modules.filter((m: any) => m.phase === phase.num);
+            if (phaseModules.length === 0) return null;
+            return (
+              <section key={phase.num}>
+                <div className="flex items-center gap-4 mb-8">
                 <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-primary/20" />
                 <h2 className="text-xl font-bold text-primary flex items-center gap-3">
                   <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-sm border border-primary/20">
@@ -221,7 +227,7 @@ export default function RoadmapPage() {
               </div>
             </section>
           );
-        })}
+        }))}
       </div>
 
       {/* Bottom Navigation */}

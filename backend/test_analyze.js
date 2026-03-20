@@ -8,7 +8,7 @@ async function testAnalyze() {
         formData.append("resume", fileBlob, "test.pdf");
         formData.append("userId", "test-user-id");
 
-        const res = await fetch("https://gapgraph.onrender.com/api/analyze", {
+        const res = await fetch("http://localhost:3001/api/analyze", {
             method: "POST",
             body: formData
         });

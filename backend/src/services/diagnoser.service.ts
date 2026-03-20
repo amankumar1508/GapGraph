@@ -79,6 +79,10 @@ export class DiagnoserService {
         if (error) {
             throw new Error("Bytez LLaMA Integration Error: " + JSON.stringify(error));
         }
+        
+        console.log("=== RAW BYTEZ OUTPUT ===");
+        console.dir(output, { depth: null });
+        console.log("========================");
 
         tracer.addStep(
             "LLM returned raw skill extraction result",
@@ -94,6 +98,8 @@ export class DiagnoserService {
             let content = "";
             if (typeof output === "string") {
                 content = output;
+            } else if (output && typeof output === "object" && typeof output.content === "string") {
+                content = output.content;
             } else if (Array.isArray(output) && output[0]?.generated_text) {
                 // Remove the input prompt from the generated text if returned together
                 const textOutput = output[0].generated_text;
