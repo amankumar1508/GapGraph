@@ -1,6 +1,5 @@
 import pdfParse from "pdf-parse";
-import { ChatOpenAI } from "@langchain/openai";
-import { HumanMessage, SystemMessage } from "@langchain/core/messages";
+import Bytez from "bytez.js";
 import { mapSkillToSOC } from "../data/soc-codes";
 import { ReasoningTracer } from "../utils/reasoning-tracer";
 
@@ -47,17 +46,15 @@ TEXT TO ANALYZE:
 `;
 
 export class DiagnoserService {
-    private llm!: ChatOpenAI;
+    private bytezModel!: any;
     private isDummyMode: boolean;
 
     constructor() {
-        this.isDummyMode = !process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY.trim() === "";
+        const apiKey = process.env.BYTEZ_API_KEY || "b441f287092403006b112c897c01f629";
+        this.isDummyMode = !apiKey || apiKey.trim() === "";
         if (!this.isDummyMode) {
-            this.llm = new ChatOpenAI({
-                modelName: "gpt-4o-mini",
-                temperature: 0,
-                maxTokens: 2000,
-            });
+            const sdk = new Bytez(apiKey);
+            this.bytezModel = sdk.model("meta-llama/Meta-Llama-3.1-8B-Instruct");
         }
     }
 
@@ -99,12 +96,20 @@ export class DiagnoserService {
             "Sending text to LLM for skill extraction"
         );
 
-        const response = await this.llm.invoke([
-            new SystemMessage(
-                "You are a precise NER system. Return only valid JSON."
-            ),
-            new HumanMessage(ZERO_SHOT_NER_PROMPT + text),
+        const { error, output } = await this.bytezModel.run([
+            {
+                role: "system",
+                content: "You are a precise NER system. Return only valid JSON without markdown wrapping."
+            },
+            {
+                role: "user",
+                content: ZERO_SHOT_NER_PROMPT + text
+            }
         ]);
+
+        if (error) {
+            throw new Error("Bytez LLaMA Integration Error: " + JSON.stringify(error));
+        }
 
         tracer.addStep(
             "LLM returned raw skill extraction result",
@@ -117,7 +122,22 @@ export class DiagnoserService {
         };
 
         try {
-            const content = response.content as string;
+            let content = "";
+            if (typeof output === "string") {
+                content = output;
+            } else if (Array.isArray(output) && output[0]?.generated_text) {
+                // Remove the input prompt from the generated text if returned together
+                const textOutput = output[0].generated_text;
+                const promptIndex = textOutput.lastIndexOf(ZERO_SHOT_NER_PROMPT + text);
+                if (promptIndex !== -1) {
+                    content = textOutput.substring(promptIndex + (ZERO_SHOT_NER_PROMPT + text).length).trim();
+                } else {
+                    content = textOutput;
+                }
+            } else {
+                content = JSON.stringify(output);
+            }
+
             // Strip any markdown code fences if present
             const cleaned = content
                 .replace(/```json\n?/g, "")
