@@ -172,6 +172,15 @@ async function main() {
             );
 
             const resumeSkills = await diagnoser.extractSkills(resumeText, tracer);
+            
+            console.log("\n==================================================");
+            console.log("📄  EXTRACTED RESUME SKILLS");
+            console.log("==================================================");
+            console.log(`🔧 Technical Skills (${resumeSkills.technical.length}):`);
+            resumeSkills.technical.forEach(s => console.log(`   - ${s.skill.padEnd(25)} | Confidence: ${(s.confidence * 100).toFixed(1).padStart(5)}% | SOC: ${s.socCode || 'N/A'}`));
+            console.log(`\n💬 Soft Skills (${resumeSkills.soft.length}):`);
+            resumeSkills.soft.forEach(s => console.log(`   - ${s.skill.padEnd(25)} | Confidence: ${(s.confidence * 100).toFixed(1).padStart(5)}% | SOC: ${s.socCode || 'N/A'}`));
+            console.log("==================================================\n");
 
             tracer.addStep(
                 "Extracting skills from Job Description",
@@ -179,6 +188,15 @@ async function main() {
             );
 
             const jdSkills = await diagnoser.extractSkillsFromJD(jdText, tracer);
+            
+            console.log("\n==================================================");
+            console.log("🎯  EXTRACTED JOB DESCRIPTION SKILLS");
+            console.log("==================================================");
+            console.log(`🔧 Technical Skills (${jdSkills.technical.length}):`);
+            jdSkills.technical.forEach(s => console.log(`   - ${s.skill.padEnd(25)} | Confidence: ${(s.confidence * 100).toFixed(1).padStart(5)}% | SOC: ${s.socCode || 'N/A'}`));
+            console.log(`\n💬 Soft Skills (${jdSkills.soft.length}):`);
+            jdSkills.soft.forEach(s => console.log(`   - ${s.skill.padEnd(25)} | Confidence: ${(s.confidence * 100).toFixed(1).padStart(5)}% | SOC: ${s.socCode || 'N/A'}`));
+            console.log("==================================================\n");
 
             // ==========================================
             // STEP 2: PLANNER - Build learning path

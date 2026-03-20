@@ -113,6 +113,13 @@ export class DiagnoserService {
                 .replace(/\}[^}]*$/, "}")   // Strip trailing text after last }
                 .trim();
             parsed = JSON.parse(cleaned);
+            
+            if (!parsed || typeof parsed !== 'object') {
+                parsed = { technical: [], soft: [] };
+            }
+            if (!Array.isArray(parsed.technical)) parsed.technical = [];
+            if (!Array.isArray(parsed.soft)) parsed.soft = [];
+            
         } catch (e) {
             tracer.addStep(
                 "Failed to parse LLM response as JSON",
