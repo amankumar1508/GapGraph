@@ -1,0 +1,232 @@
+{
+    "courses": [
+        {
+            "courseId": "CS101",
+            "title": "Introduction to Python",
+            "description": "Fundamentals of Python programming language.",
+            "skillsCovered": [
+                "python",
+                "programming fundamentals"
+            ],
+            "prerequisites": [],
+            "provider": "internal",
+            "difficulty": "beginner",
+            "durationHours": 10
+        },
+        {
+            "courseId": "CS102",
+            "title": "Data Structures & Algorithms",
+            "description": "Core data structures and algorithms using Python.",
+            "skillsCovered": [
+                "data structures",
+                "algorithms"
+            ],
+            "prerequisites": [
+                "CS101"
+            ],
+            "provider": "internal",
+            "difficulty": "intermediate",
+            "durationHours": 20
+        },
+        {
+            "courseId": "CS201",
+            "title": "Introduction to JavaScript",
+            "description": "Learn JavaScript from scratch including ES6+ features.",
+            "skillsCovered": [
+                "javascript",
+                "es6"
+            ],
+            "prerequisites": [],
+            "provider": "internal",
+            "difficulty": "beginner",
+            "durationHours": 12
+        },
+        {
+            "courseId": "CS202",
+            "title": "Node.js & Express",
+            "description": "Backend development with Node.js and Express framework.",
+            "skillsCovered": [
+                "node.js",
+                "express",
+                "rest api"
+            ],
+            "prerequisites": [
+                "CS201"
+            ],
+            "provider": "internal",
+            "difficulty": "intermediate",
+            "durationHours": 15
+        },
+        {
+            "courseId": "CS203",
+            "title": "React Fundamentals",
+            "description": "Building modern UIs with React.",
+            "skillsCovered": [
+                "react",
+                "frontend development",
+                "component architecture"
+            ],
+            "prerequisites": [
+                "CS201"
+            ],
+            "provider": "internal",
+            "difficulty": "intermediate",
+            "durationHours": 18
+        },
+        {
+            "courseId": "CS301",
+            "title": "TypeScript Mastery",
+            "description": "Advanced TypeScript for large-scale apps.",
+            "skillsCovered": [
+                "typescript",
+                "type systems"
+            ],
+            "prerequisites": [
+                "CS201"
+            ],
+            "provider": "internal",
+            "difficulty": "intermediate",
+            "durationHours": 10
+        },
+        {
+            "courseId": "DB101",
+            "title": "SQL & PostgreSQL Basics",
+            "description": "Relational databases, SQL queries, and PostgreSQL.",
+            "skillsCovered": [
+                "sql",
+                "postgresql",
+                "database design"
+            ],
+            "prerequisites": [],
+            "provider": "internal",
+            "difficulty": "beginner",
+            "durationHours": 12
+        },
+        {
+            "courseId": "DB201",
+            "title": "Advanced Database Techniques",
+            "description": "Indexing, optimization, transactions, and ORM usage.",
+            "skillsCovered": [
+                "database optimization",
+                "orm",
+                "prisma"
+            ],
+            "prerequisites": [
+                "DB101"
+            ],
+            "provider": "internal",
+            "difficulty": "advanced",
+            "durationHours": 14
+        },
+        {
+            "courseId": "DV101",
+            "title": "DevOps Essentials",
+            "description": "CI/CD, Docker, and deployment pipelines.",
+            "skillsCovered": [
+                "docker",
+                "ci/cd",
+                "devops",
+                "linux"
+            ],
+            "prerequisites": [],
+            "provider": "internal",
+            "difficulty": "beginner",
+            "durationHours": 15
+        },
+        {
+            "courseId": "DV201",
+            "title": "Kubernetes & Cloud Infrastructure",
+            "description": "Container orchestration and cloud deployments.",
+            "skillsCovered": [
+                "kubernetes",
+                "aws",
+                "cloud computing"
+            ],
+            "prerequisites": [
+                "DV101"
+            ],
+            "provider": "internal",
+            "difficulty": "advanced",
+            "durationHours": 20
+        },
+        {
+            "courseId": "ML101",
+            "title": "Machine Learning Foundations",
+            "description": "Core ML concepts, supervised and unsupervised learning.",
+            "skillsCovered": [
+                "machine learning",
+                "scikit-learn",
+                "numpy",
+                "pandas"
+            ],
+            "prerequisites": [
+                "CS101"
+            ],
+            "provider": "internal",
+            "difficulty": "intermediate",
+            "durationHours": 25
+        },
+        {
+            "courseId": "ML201",
+            "title": "Deep Learning with TensorFlow",
+            "description": "Neural networks, CNNs, RNNs using TensorFlow.",
+            "skillsCovered": [
+                "deep learning",
+                "tensorflow",
+                "neural networks"
+            ],
+            "prerequisites": [
+                "ML101"
+            ],
+            "provider": "internal",
+            "difficulty": "advanced",
+            "durationHours": 30
+        },
+        {
+            "courseId": "SE101",
+            "title": "Software Engineering Practices",
+            "description": "Agile, testing, code reviews, and version control.",
+            "skillsCovered": [
+                "git",
+                "agile",
+                "software testing",
+                "code review"
+            ],
+            "prerequisites": [],
+            "provider": "internal",
+            "difficulty": "beginner",
+            "durationHours": 8
+        },
+        {
+            "courseId": "SE201",
+            "title": "System Design",
+            "description": "Designing scalable distributed systems.",
+            "skillsCovered": [
+                "system design",
+                "microservices",
+                "scalability"
+            ],
+            "prerequisites": [
+                "SE101",
+                "DB101"
+            ],
+            "provider": "internal",
+            "difficulty": "advanced",
+            "durationHours": 20
+        },
+        {
+            "courseId": "SEC101",
+            "title": "Cybersecurity Fundamentals",
+            "description": "Security basics, authentication, and encryption.",
+            "skillsCovered": [
+                "cybersecurity",
+                "authentication",
+                "encryption"
+            ],
+            "prerequisites": [],
+            "provider": "internal",
+            "difficulty": "beginner",
+            "durationHours": 10
+        }
+    ]
+}

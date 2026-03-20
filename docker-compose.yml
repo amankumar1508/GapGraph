@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: gapgraph-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: gapgraph
+      POSTGRES_PASSWORD: gapgraph_secret
+      POSTGRES_DB: gapgraph
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
