@@ -26,7 +26,9 @@ export default function SignupPage() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Signup failed");
+      if (!res.ok) {
+        throw new Error(data.details ? `${data.error}: ${data.details}` : (data.error || "Signup failed"));
+      }
 
       setSelectedRole(formData.role);
       login(data.user);
