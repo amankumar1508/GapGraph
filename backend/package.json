@@ -1,0 +1,35 @@
+{
+  "name": "gapgraph-backend",
+  "version": "1.0.0",
+  "description": "GapGraph AI-Adaptive Onboarding Engine Backend",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "start": "node dist/server.js",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:migrate": "prisma migrate dev"
+  },
+  "dependencies": {
+    "fastify": "^4.28.0",
+    "@fastify/multipart": "^8.3.0",
+    "@fastify/cors": "^9.0.1",
+    "langchain": "^0.3.0",
+    "@langchain/openai": "^0.3.0",
+    "@langchain/core": "^0.3.0",
+    "@prisma/client": "^5.19.0",
+    "@dagrejs/graphlib": "^2.2.1",
+    "pdf-parse": "^1.1.1",
+    "dotenv": "^16.4.5",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "ts-node-dev": "^2.0.0",
+    "@types/node": "^20.14.0",
+    "@types/pdf-parse": "^1.1.4",
+    "@types/uuid": "^9.0.8",
+    "prisma": "^5.19.0"
+  }
+}

@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Skill {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  category  String   // "technical" | "soft"
+  socCode   String?  // O*NET SOC code
+  createdAt DateTime @default(now())
+}
+
+model Course {
+  id            String   @id @default(uuid())
+  courseId       String   @unique
+  title         String
+  description   String?
+  skillsCovered String[] // array of skill names
+  prerequisites String[] // array of courseIds
+  provider      String   @default("internal")
+  difficulty    String   @default("beginner") // beginner | intermediate | advanced
+  durationHours Float    @default(1)
+  createdAt     DateTime @default(now())
+}
+
+model AnalysisResult {
+  id              String   @id @default(uuid())
+  resumeFilename  String
+  extractedSkills Json     // { technical: [], soft: [] }
+  jdSkills        Json?    // { technical: [], soft: [] }
+  skillGaps       Json     // string[]
+  learningPath    Json     // { nodes: [], edges: [], flagged: [] }
+  reasoningTrace  Json     // { steps: [] }
+  createdAt       DateTime @default(now())
+}
