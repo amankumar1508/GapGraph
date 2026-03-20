@@ -47,14 +47,18 @@ TEXT TO ANALYZE:
 `;
 
 export class DiagnoserService {
-    private llm: ChatOpenAI;
+    private llm!: ChatOpenAI;
+    private isDummyMode: boolean;
 
     constructor() {
-        this.llm = new ChatOpenAI({
-            modelName: "gpt-4o-mini",
-            temperature: 0,
-            maxTokens: 2000,
-        });
+        this.isDummyMode = !process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY.trim() === "";
+        if (!this.isDummyMode) {
+            this.llm = new ChatOpenAI({
+                modelName: "gpt-4o-mini",
+                temperature: 0,
+                maxTokens: 2000,
+            });
+        }
     }
 
     /**
@@ -72,6 +76,24 @@ export class DiagnoserService {
         text: string,
         tracer: ReasoningTracer
     ): Promise<ExtractedSkills> {
+        if (this.isDummyMode) {
+            tracer.addStep(
+                "DUMMY MODE ENABLED: Skipping zero-shot NER extraction",
+                "Returning mock extracted skills for candidates"
+            );
+            return {
+                technical: [
+                    { skill: "Python", confidence: 0.95, socCode: "15-1299.08", socTitle: "Computer Systems Architects" },
+                    { skill: "React", confidence: 0.85, socCode: null, socTitle: null },
+                    { skill: "SQL", confidence: 0.80, socCode: null, socTitle: null },
+                    { skill: "Git", confidence: 0.90, socCode: null, socTitle: null }
+                ],
+                soft: [
+                    { skill: "Communication", confidence: 0.80, socCode: null, socTitle: null }
+                ]
+            };
+        }
+
         tracer.addStep(
             "Initiating Zero-Shot NER extraction from document text",
             "Sending text to LLM for skill extraction"
@@ -151,6 +173,19 @@ export class DiagnoserService {
         jdText: string,
         tracer: ReasoningTracer
     ): Promise<ExtractedSkills> {
+        if (this.isDummyMode) {
+            tracer.addStep("DUMMY MODE: Processing Job Description text", "Returning mock JD skills");
+            return {
+                technical: [
+                    { skill: "Python", confidence: 0.9, socCode: null, socTitle: null },
+                    { skill: "React", confidence: 0.9, socCode: null, socTitle: null },
+                    { skill: "LangGraph", confidence: 1.0, socCode: null, socTitle: null },
+                    { skill: "ChromaDB", confidence: 0.95, socCode: null, socTitle: null }
+                ],
+                soft: []
+            };
+        }
+
         tracer.addStep(
             "Processing Job Description text",
             "Extracting JD skills using Zero-Shot NER"
