@@ -11,7 +11,8 @@ interface AppContextType {
   uploadedFiles: { resume: File | null; jd: File | null };
   setUploadedFiles: (files: { resume: File | null; jd: File | null }) => void;
   isLoggedIn: boolean;
-  login: () => void;
+  userProfile: { name: string; email: string; role: string; id?: string } | null;
+  login: (profile: { name: string; email: string; role: string; id?: string }) => void;
   logout: () => void;
   analysisResult: any;
   setAnalysisResult: (result: any) => void;
@@ -24,6 +25,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [selectedRole, setSelectedRole] = useState("Software Engineer");
   const [uploadedFiles, setUploadedFiles] = useState<{ resume: File | null; jd: File | null }>({ resume: null, jd: null });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userProfile, setUserProfile] = useState<{ name: string; email: string; role: string; id?: string } | null>(null);
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [isInitialized, setIsInitialized] = useState(false);
 
@@ -32,6 +34,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     try {
       const storedLogin = localStorage.getItem("gg_isLoggedIn");
       if (storedLogin) setIsLoggedIn(JSON.parse(storedLogin));
+
+      const storedProfile = localStorage.getItem("gg_userProfile");
+      if (storedProfile) setUserProfile(JSON.parse(storedProfile));
 
       const storedAnalysis = localStorage.getItem("gg_analysisResult");
       if (storedAnalysis) setAnalysisResult(JSON.parse(storedAnalysis));
@@ -48,7 +53,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!isInitialized) return;
     localStorage.setItem("gg_isLoggedIn", JSON.stringify(isLoggedIn));
-  }, [isLoggedIn, isInitialized]);
+    if (userProfile) {
+      localStorage.setItem("gg_userProfile", JSON.stringify(userProfile));
+    } else {
+      localStorage.removeItem("gg_userProfile");
+    }
+  }, [isLoggedIn, userProfile, isInitialized]);
 
   useEffect(() => {
     if (!isInitialized) return;
@@ -79,9 +89,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  const login = () => setIsLoggedIn(true);
+  const login = (profile: { name: string; email: string; role: string; id?: string }) => {
+    setIsLoggedIn(true);
+    setUserProfile(profile);
+  };
   const logout = () => {
     setIsLoggedIn(false);
+    setUserProfile(null);
     setCompletedModules(new Set());
     setAnalysisResult(null);
   };
@@ -97,6 +111,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         uploadedFiles,
         setUploadedFiles,
         isLoggedIn,
+        userProfile,
         login,
         logout,
         analysisResult,

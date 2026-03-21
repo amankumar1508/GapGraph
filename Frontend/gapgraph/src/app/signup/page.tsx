@@ -31,7 +31,7 @@ export default function SignupPage() {
       }
 
       setSelectedRole(formData.role);
-      login();
+      login(data.user);
       router.push("/upload"); // Route to upload for new users
     } catch (error: any) {
       alert(error.message);

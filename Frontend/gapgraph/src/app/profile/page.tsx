@@ -9,17 +9,17 @@ import { useRef } from "react";
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { isLoggedIn, logout, selectedRole, setSelectedRole } = useApp();
+  const { isLoggedIn, logout, selectedRole, setSelectedRole, userProfile, uploadedFiles, analysisResult } = useApp();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
 
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    name: mockUser.name,
+    name: userProfile?.name || mockUser.name,
     company: "GapGraph User",
     role: selectedRole,
     experience: mockUser.experience,
-    email: "hello@gapgraph.io", 
+    email: userProfile?.email || "hello@gapgraph.io", 
     phone: "Not provided"
   });
 
@@ -105,20 +105,27 @@ export default function ProfilePage() {
           <div className="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/10">
             <h3 className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-4">Uploaded Assets</h3>
             <div className="space-y-3">
-              <div className="flex items-center gap-3 p-3 bg-surface-container-highest rounded-xl">
-                <span className="material-symbols-outlined text-success">task</span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-on-surface truncate">resume_v4.pdf</p>
-                  <p className="text-[10px] text-on-surface-variant uppercase">Analyzed 2 days ago</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-3 bg-surface-container-highest rounded-xl">
-                <span className="material-symbols-outlined text-secondary">description</span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-on-surface truncate">Senior_Google_JD.pdf</p>
-                  <p className="text-[10px] text-on-surface-variant uppercase">Target benchmark</p>
-                </div>
-              </div>
+              {(uploadedFiles?.resume || analysisResult) ? (
+                 <div className="flex items-center gap-3 p-3 bg-surface-container-highest rounded-xl">
+                   <span className="material-symbols-outlined text-success">task</span>
+                   <div className="flex-1 min-w-0">
+                     <p className="text-sm font-bold text-on-surface truncate">{uploadedFiles?.resume?.name || analysisResult?.resumeFilename || "Resume.pdf"}</p>
+                     <p className="text-[10px] text-on-surface-variant uppercase">Analyzed Successfully</p>
+                   </div>
+                 </div>
+              ) : null}
+              {uploadedFiles?.jd ? (
+                 <div className="flex items-center gap-3 p-3 bg-surface-container-highest rounded-xl">
+                   <span className="material-symbols-outlined text-secondary">description</span>
+                   <div className="flex-1 min-w-0">
+                     <p className="text-sm font-bold text-on-surface truncate">{uploadedFiles.jd.name}</p>
+                     <p className="text-[10px] text-on-surface-variant uppercase">Target benchmark</p>
+                   </div>
+                 </div>
+              ) : null}
+              {!(uploadedFiles?.resume || uploadedFiles?.jd || analysisResult) && (
+                <p className="text-xs text-on-surface-variant">No documents uploaded yet.</p>
+              )}
             </div>
           </div>
         </div>
