@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { modules as staticModules } from "@/lib/data";
 import { useApp } from "@/lib/context";
 import { useToast } from "@/components/Toast";
@@ -24,6 +25,7 @@ export default function RoadmapPage() {
   const router = useRouter();
   const { completedModules, overallProgress, toggleModule, analysisResult } = useApp();
   const { showToast } = useToast();
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
 
   // Prefer dynamic modules from backend if analysis has run, else fallback to static demo
   const isDynamic = !!analysisResult;
@@ -150,6 +152,36 @@ export default function RoadmapPage() {
         </div>
       </div>
 
+      {/* Embedded YouTube Player */}
+      <AnimatePresence mode="wait">
+        {activeVideoId && (
+          <motion.section 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="mb-12"
+          >
+            <div className="bg-[#000] rounded-2xl overflow-hidden shadow-2xl relative pt-[56.25%] border border-surface-container-highest">
+              <div className="absolute top-0 right-0 z-10 p-4">
+                <button 
+                  onClick={() => setActiveVideoId(null)}
+                  className="w-10 h-10 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white backdrop-blur-md transition-colors border border-white/10"
+                >
+                  <span className="material-symbols-outlined">close</span>
+                </button>
+              </div>
+              <iframe 
+                src={`https://www.youtube.com/embed/${activeVideoId}?autoplay=1&rel=0`} 
+                title="YouTube video player" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+                className="absolute inset-0 w-full h-full border-0"
+              />
+            </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
+
       {/* Roadmap Phases */}
       <div className="space-y-16">
         {phases.map((phase, pi) => {
@@ -225,16 +257,26 @@ export default function RoadmapPage() {
                       
                       {/* Curated YouTube Resources */}
                       <div className="space-y-2">
-                        {mod.resources && mod.resources.slice(0, 2).map((r: any) => (
-                          <button
-                            key={r.title}
-                            onClick={() => router.push(`/module/${mod.id}`)}
-                            className="w-full py-2 bg-surface-container-lowest hover:bg-surface-container-highest rounded-lg text-[10px] font-medium transition-colors text-left px-3 flex items-center justify-between group/res"
-                          >
-                            <span className="truncate pr-2">{r.title}</span>
-                            <span className="material-symbols-outlined text-[12px] opacity-0 group-hover/res:opacity-100 shrink-0 text-red-500">smart_display</span>
-                          </button>
-                        ))}
+                        {mod.resources && mod.resources.slice(0, 2).map((r: any) => {
+                          const vId = r.videoId || (r.url && r.url.includes("youtube.com") ? new URL(r.url).searchParams.get("v") : null);
+                          return (
+                            <button
+                              key={r.title}
+                              onClick={() => {
+                                if (vId && vId !== "dQw4w9WgXcQ") {
+                                  setActiveVideoId(vId);
+                                  window.scrollTo({ top: 0, behavior: "smooth" });
+                                } else {
+                                  router.push(`/module/${mod.id}`);
+                                }
+                              }}
+                              className={`w-full py-2 bg-surface-container-lowest hover:bg-surface-container-highest rounded-lg text-[10px] font-medium transition-colors text-left px-3 flex items-center justify-between group/res ${activeVideoId === vId ? 'ring-1 ring-red-500' : ''}`}
+                            >
+                              <span className="truncate pr-2">{r.title}</span>
+                              <span className="material-symbols-outlined text-[12px] text-red-500" style={{ fontVariationSettings: "'FILL' 1" }}>smart_display</span>
+                            </button>
+                          );
+                        })}
                       </div>
                     </motion.div>
                   );

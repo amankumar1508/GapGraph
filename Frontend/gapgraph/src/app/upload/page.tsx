@@ -22,8 +22,21 @@ export default function UploadPage() {
   const [jdText, setJdText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [loaderStep, setLoaderStep] = useState(0);
+  const [fileError, setFileError] = useState<string | null>(null);
   const resumeRef = useRef<HTMLInputElement>(null);
   const jdRef = useRef<HTMLInputElement>(null);
+
+  const ALLOWED_EXTENSIONS = [".pdf", ".docx", ".doc", ".txt"];
+
+  const validateFile = (file: File, type: "resume" | "jd"): boolean => {
+    const ext = "." + file.name.split(".").pop()?.toLowerCase();
+    if (!ALLOWED_EXTENSIONS.includes(ext)) {
+      setFileError(`Only Resume or Job Description files are allowed (PDF, DOCX, TXT). "${file.name}" is not a valid file.`);
+      setTimeout(() => setFileError(null), 5000);
+      return false;
+    }
+    return true;
+  };
 
   const handleFileDrop = useCallback(
     (type: "resume" | "jd") => (e: React.DragEvent) => {
@@ -34,6 +47,7 @@ export default function UploadPage() {
       }
       const file = e.dataTransfer.files[0];
       if (file) {
+        if (!validateFile(file, type)) return;
         if (type === "resume") {
           setResumeName(file.name);
           setUploadedFiles({ ...uploadedFiles, resume: file });
@@ -54,6 +68,7 @@ export default function UploadPage() {
       }
       const file = e.target.files?.[0];
       if (file) {
+        if (!validateFile(file, type)) return;
         if (type === "resume") {
           setResumeName(file.name);
           setUploadedFiles({ ...uploadedFiles, resume: file });
@@ -73,6 +88,14 @@ export default function UploadPage() {
       router.push("/login");
       return;
     }
+
+    // Validate: need at least a resume OR JD text
+    if (!uploadedFiles.resume && !jdText.trim()) {
+      setFileError("Please upload a resume (PDF/DOCX) or paste a job description / skills you want to learn before analyzing.");
+      setTimeout(() => setFileError(null), 5000);
+      return;
+    }
+
     setIsLoading(true);
     setLoaderStep(0);
 
@@ -91,7 +114,10 @@ export default function UploadPage() {
         body: formData,
       });
 
-      if (!res.ok) throw new Error("Analysis failed");
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({ error: "Analysis failed" }));
+        throw new Error(errData.error || errData.message || "Analysis failed");
+      }
       
       const result = await res.json();
       console.log("Analysis Result:", result);
@@ -99,13 +125,18 @@ export default function UploadPage() {
 
       clearInterval(interval);
       setLoaderStep(loaderSteps.length);
-      setIsLoading(false);
-      // Removed automatic routing so the user can see the extracted data in the sidebar
-    } catch (error) {
+
+      // Brief delay to show final animation step, then redirect to Gap Analysis
+      setTimeout(() => {
+        setIsLoading(false);
+        router.push("/dashboard");
+      }, 1200);
+    } catch (error: any) {
       console.error(error);
       clearInterval(interval);
       setIsLoading(false);
-      alert("Failed to analyze profile.");
+      setFileError(error.message || "Failed to analyze profile. Please try again.");
+      setTimeout(() => setFileError(null), 5000);
     }
   };
 
@@ -115,6 +146,17 @@ export default function UploadPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
+      {/* File Error Banner */}
+      {fileError && (
+        <div className="fixed top-16 left-1/2 -translate-x-1/2 z-[100] bg-red-500/90 backdrop-blur-md text-white px-6 py-3 rounded-xl shadow-xl flex items-center gap-3 max-w-lg animate-in fade-in">
+          <span className="material-symbols-outlined">error</span>
+          <span className="text-sm font-medium">{fileError}</span>
+          <button onClick={() => setFileError(null)} className="ml-auto">
+            <span className="material-symbols-outlined text-sm">close</span>
+          </button>
+        </div>
+      )}
+
       {/* Loader Overlay */}
       {isLoading && (
         <div className="fixed inset-0 z-[200] bg-surface/95 backdrop-blur-xl flex items-center justify-center">
@@ -178,10 +220,7 @@ export default function UploadPage() {
                 className="group relative flex flex-col items-center justify-center h-64 bg-[#111827] border-2 border-dashed border-primary-container/40 rounded-xl hover:border-secondary transition-all cursor-pointer overflow-hidden"
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={handleFileDrop("resume")}
-                onClick={() => {
-                  if (!isLoggedIn) router.push("/login");
-                  else resumeRef.current?.click();
-                }}
+                onClick={() => resumeRef.current?.click()}
               >
                 <div className="absolute inset-0 faint-grid opacity-10" />
                 <input
@@ -213,10 +252,7 @@ export default function UploadPage() {
                 className="group relative flex flex-col items-center justify-center h-64 bg-[#111827] border-2 border-dashed border-primary-container/40 rounded-xl hover:border-secondary transition-all cursor-pointer overflow-hidden"
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={handleFileDrop("jd")}
-                onClick={() => {
-                  if (!isLoggedIn) router.push("/login");
-                  else jdRef.current?.click();
-                }}
+                onClick={() => jdRef.current?.click()}
               >
                 <div className="absolute inset-0 faint-grid opacity-10" />
                 <input
@@ -250,10 +286,7 @@ export default function UploadPage() {
               <textarea
                 value={jdText}
                 onChange={(e) => setJdText(e.target.value)}
-                onClick={() => {
-                  if (!isLoggedIn) router.push("/login");
-                }}
-                placeholder="Paste the job description text here..."
+                placeholder="Paste the job description text here or type the skills you want to learn (e.g., frontend development, React, Python)..."
                 className="w-full bg-surface-container-lowest border-0 border-b-2 border-outline-variant/30 focus:ring-0 focus:border-primary-container text-on-surface py-4 px-4 rounded-t-xl transition-all h-32 resize-none placeholder:text-on-surface-variant/40"
               />
             </div>
@@ -267,10 +300,7 @@ export default function UploadPage() {
                 {roleOptions.map((role) => (
                   <button
                     key={role}
-                    onClick={() => {
-                      if (!isLoggedIn) router.push("/login");
-                      else setSelectedRole(role);
-                    }}
+                    onClick={() => setSelectedRole(role)}
                     className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                       selectedRole === role
                         ? "bg-primary-container text-on-primary-container shadow-lg shadow-primary-container/30"
@@ -292,7 +322,7 @@ export default function UploadPage() {
               <div className="space-y-8">
                 {["Systems Design", "Algorithmic Efficiency", "Cloud Architecture", "Concurrency Control", "Data Modeling"].map(
                   (skill) => (
-                    <SliderItem key={skill} label={skill} isLoggedIn={isLoggedIn} router={router} />
+                    <SliderItem key={skill} label={skill} />
                   )
                 )}
               </div>
@@ -301,10 +331,7 @@ export default function UploadPage() {
             {/* CTA */}
             <div className="flex items-center justify-between pt-6">
               <button
-                onClick={() => {
-                  if (!isLoggedIn) router.push("/login");
-                  else router.push("/dashboard");
-                }}
+                onClick={() => router.push("/dashboard")}
                 className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors font-semibold text-sm"
               >
                 View demo results →
@@ -403,7 +430,7 @@ export default function UploadPage() {
   );
 }
 
-function SliderItem({ label, isLoggedIn, router }: { label: string; isLoggedIn: boolean; router: any }) {
+function SliderItem({ label }: { label: string }) {
   const [value, setValue] = useState(50);
   const levels = ["Beginner", "Basic", "Intermediate", "Advanced", "Expert"];
   const levelIndex = Math.min(Math.floor(value / 20), 4);
@@ -420,9 +447,6 @@ function SliderItem({ label, isLoggedIn, router }: { label: string; isLoggedIn: 
         max="100"
         value={value}
         onChange={(e) => setValue(+e.target.value)}
-        onClick={() => {
-          if (!isLoggedIn) router.push("/login");
-        }}
         className="w-full h-1.5 bg-surface-variant rounded-lg appearance-none cursor-pointer custom-slider"
         style={{ background: `linear-gradient(to right, #7c3aed ${value}%, #2f3445 ${value}%)` }}
       />

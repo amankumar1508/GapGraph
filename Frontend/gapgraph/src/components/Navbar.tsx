@@ -13,13 +13,13 @@ const navItems = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { overallProgress, isLoggedIn } = useApp();
+  const { overallProgress, isLoggedIn, analysisResult } = useApp();
   const readiness = 74 + Math.round(overallProgress * 0.26);
 
   return (
     <>
       {/* Desktop Nav */}
-      <nav className="bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 shadow-[0_0_20px_rgba(124,58,237,0.08)] flex justify-between items-center w-full px-6 py-3">
+      <nav className={`bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 shadow-[0_0_20px_rgba(124,58,237,0.08)] flex justify-between items-center w-full px-6 py-3 ${isLoggedIn ? '' : 'hidden'}`}>
         <div className="flex items-center gap-4">
           <Link href="/upload" className="flex items-end gap-1 group">
             <div className="flex items-end gap-[2px]">
@@ -54,42 +54,17 @@ export default function Navbar() {
           </div>
         </div>
         <div className="flex items-center gap-4 md:gap-6">
-          {isLoggedIn ? (
-            <>
-              <div className="hidden md:flex bg-surface-container-high px-3 py-1.5 rounded-full border border-outline-variant/20 items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-on-surface-variant font-semibold text-sm">
-                  Live Readiness: {readiness}%
-                </span>
-              </div>
-              <Link href="/profile" className="w-9 h-9 rounded-full bg-primary-container hover:scale-105 transition-transform flex items-center justify-center text-on-primary-container shadow-[0_0_15px_rgba(124,58,237,0.3)] overflow-hidden">
-                <span className="material-symbols-outlined text-lg">person</span>
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link
-                href="/login"
-                className={
-                  pathname === "/signup"
-                    ? "pulse-gradient px-5 py-2 rounded-full text-on-primary-container text-sm font-bold shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:scale-105 transition-transform"
-                    : "hidden md:inline-block text-on-surface-variant text-sm font-bold hover:text-primary transition-all active:text-primary active:drop-shadow-[0_0_12px_rgba(124,58,237,0.9)] focus:text-primary focus:drop-shadow-[0_0_12px_rgba(124,58,237,0.9)]"
-                }
-              >
-                Log In
-              </Link>
-              <Link
-                href="/signup"
-                className={
-                  pathname !== "/signup"
-                    ? "pulse-gradient px-5 py-2 rounded-full text-on-primary-container text-sm font-bold shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:scale-105 transition-transform"
-                    : "hidden md:inline-block text-on-surface-variant text-sm font-bold hover:text-primary transition-all active:text-primary active:drop-shadow-[0_0_12px_rgba(124,58,237,0.9)] focus:text-primary focus:drop-shadow-[0_0_12px_rgba(124,58,237,0.9)]"
-                }
-              >
-                Sign Up
-              </Link>
-            </>
+          {analysisResult && (
+            <div className="hidden md:flex bg-surface-container-high px-3 py-1.5 rounded-full border border-outline-variant/20 items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-on-surface-variant font-semibold text-sm">
+                Live Readiness: {readiness}%
+              </span>
+            </div>
           )}
+          <Link href="/profile" className="w-9 h-9 rounded-full bg-primary-container hover:scale-105 transition-transform flex items-center justify-center text-on-primary-container shadow-[0_0_15px_rgba(124,58,237,0.3)] overflow-hidden">
+            <span className="material-symbols-outlined text-lg">person</span>
+          </Link>
         </div>
       </nav>
 

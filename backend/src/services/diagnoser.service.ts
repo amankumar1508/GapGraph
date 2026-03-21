@@ -211,14 +211,50 @@ export class DiagnoserService {
         tracer: ReasoningTracer
     ): Promise<ExtractedSkills> {
         if (this.isDummyMode) {
-            tracer.addStep("DUMMY MODE: Processing Job Description text", "Returning mock JD skills");
+            tracer.addStep("DUMMY MODE: Processing Job Description text", "Scanning JD for catalog keywords since OpenAI is unavailable");
+
+            const catalogKeywords = [
+                "python", "javascript", "node.js", "express", "react", "frontend", "backend",
+                "typescript", "sql", "postgresql", "docker", "ci/cd", "devops", 
+                "kubernetes", "aws", "machine learning", "tensorflow", "git", "agile", 
+                "system design", "cybersecurity", "algorithms", "data structures"
+            ];
+            
+            const lowerJd = jdText.toLowerCase();
+            const extracted: string[] = [];
+            
+            // Heuristic mappings for broad terms
+            if (lowerJd.includes("backend")) {
+                extracted.push("node.js", "express", "postgresql", "docker", "system design");
+            }
+            if (lowerJd.includes("frontend") || lowerJd.includes("front-end")) {
+                extracted.push("react", "javascript", "typescript");
+            }
+            if (lowerJd.includes("data science") || lowerJd.includes("ai")) {
+                extracted.push("python", "machine learning", "tensorflow");
+            }
+            
+            // Scan for exact keyword matches
+            for (const kw of catalogKeywords) {
+                if (lowerJd.includes(kw) && !extracted.includes(kw)) {
+                    extracted.push(kw);
+                }
+            }
+            
+            // Fallback if absolutely nothing matched so we don't get an empty roadmap
+            if (extracted.length === 0) {
+                extracted.push("docker", "kubernetes", "aws", "system design");
+            }
+
+            const technical = extracted.map(skill => ({
+                skill,
+                confidence: 0.95,
+                socCode: null,
+                socTitle: null
+            }));
+
             return {
-                technical: [
-                    { skill: "Python", confidence: 0.9, socCode: null, socTitle: null },
-                    { skill: "React", confidence: 0.9, socCode: null, socTitle: null },
-                    { skill: "LangGraph", confidence: 1.0, socCode: null, socTitle: null },
-                    { skill: "ChromaDB", confidence: 0.95, socCode: null, socTitle: null }
-                ],
+                technical,
                 soft: [],
                 experience: [],
                 projects: []

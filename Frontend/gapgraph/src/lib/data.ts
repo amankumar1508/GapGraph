@@ -64,9 +64,9 @@ export const modules: Module[] = [
     status: "in_progress", completedAt: null,
     description: "Master containerization from scratch. Write Dockerfiles, build images, and run multi-container apps with Docker Compose.",
     resources: [
-      { type: "video", title: "Docker in 100 Seconds", source: "YouTube · Fireship", duration: "2 min", url: "#" },
-      { type: "docs", title: "Docker Official Get Started", source: "docs.docker.com", duration: "3 hrs", url: "#" },
-      { type: "course", title: "Docker Mastery", source: "Udemy", duration: "4 hrs", url: "#" },
+      { type: "video", title: "Docker in 100 Seconds", source: "YouTube · Fireship", duration: "2 min", url: "https://www.youtube.com/watch?v=Gjnup-PuquQ", videoId: "Gjnup-PuquQ" } as any,
+      { type: "video", title: "Docker Tutorial for Beginners", source: "YouTube · TechWorld with Nana", duration: "2 hr", url: "https://www.youtube.com/watch?v=3c-iBn73dDE", videoId: "3c-iBn73dDE" } as any,
+      { type: "video", title: "Docker Crash Course for Absolute Beginners", source: "YouTube · TechWorld with Nana", duration: "1 hr", url: "https://www.youtube.com/watch?v=pg19Z8LL06w", videoId: "pg19Z8LL06w" } as any,
     ],
     quiz: {
       question: "What is the primary purpose of a Docker container?",
@@ -81,8 +81,8 @@ export const modules: Module[] = [
     completedAt: null,
     description: "Learn pods, deployments, services, ingress, and ConfigMaps. Deploy a real app to a local K8s cluster.",
     resources: [
-      { type: "video", title: "Kubernetes Explained in 6 Minutes", source: "YouTube · TechWorld", duration: "6 min", url: "#" },
-      { type: "docs", title: "Kubernetes Interactive Tutorial", source: "kubernetes.io", duration: "4 hrs", url: "#" },
+      { type: "video", title: "Kubernetes in 100 Seconds", source: "YouTube · Fireship", duration: "2 min", url: "https://www.youtube.com/watch?v=PziYflu8cB8", videoId: "PziYflu8cB8" } as any,
+      { type: "course", title: "Kubernetes Tutorial for Beginners", source: "YouTube · TechWorld with Nana", duration: "3.5 hr", url: "https://www.youtube.com/watch?v=X48VuDVv0do", videoId: "X48VuDVv0do" } as any,
     ],
     quiz: {
       question: "What is a Kubernetes Pod?",
@@ -97,8 +97,8 @@ export const modules: Module[] = [
     completedAt: null,
     description: "Build automated pipelines for test, build, and deploy. Push to main = live in production.",
     resources: [
-      { type: "video", title: "GitHub Actions Full Course", source: "YouTube · TechWithTim", duration: "1.5 hrs", url: "#" },
-      { type: "docs", title: "GitHub Actions Docs", source: "docs.github.com", duration: "2 hrs", url: "#" },
+      { type: "video", title: "GitHub Actions Tutorial", source: "YouTube · Fireship", duration: "12 min", url: "https://www.youtube.com/watch?v=eB0nUzAI7M8", videoId: "eB0nUzAI7M8" } as any,
+      { type: "course", title: "GitHub Actions Full Course", source: "YouTube · freeCodeCamp", duration: "2 hr", url: "https://www.youtube.com/watch?v=R8_veQiYBjI", videoId: "R8_veQiYBjI" } as any,
     ],
     quiz: {
       question: "What triggers a GitHub Actions workflow?",
@@ -113,8 +113,8 @@ export const modules: Module[] = [
     completedAt: null,
     description: "Scalability, load balancing, caching strategies, database sharding, and CAP theorem for real interview questions.",
     resources: [
-      { type: "docs", title: "System Design Primer", source: "GitHub · donnemartin", duration: "6 hrs", url: "#" },
-      { type: "video", title: "Gaurav Sen System Design Series", source: "YouTube", duration: "4 hrs", url: "#" },
+      { type: "video", title: "System Design for Beginners", source: "YouTube · Gaurav Sen", duration: "15 min", url: "https://www.youtube.com/watch?v=xpDnVSmNFX0", videoId: "xpDnVSmNFX0" } as any,
+      { type: "course", title: "System Design Full Course", source: "YouTube · freeCodeCamp", duration: "1.5 hr", url: "https://www.youtube.com/watch?v=F2FmTdLtb_4", videoId: "F2FmTdLtb_4" } as any,
     ],
     quiz: {
       question: "What does horizontal scaling mean?",
@@ -129,7 +129,8 @@ export const modules: Module[] = [
     completedAt: null,
     description: "Cache-aside, write-through, TTL strategies. Speed up APIs by 10x using Redis in production.",
     resources: [
-      { type: "video", title: "Redis Crash Course", source: "YouTube · Traversy Media", duration: "1 hr", url: "#" },
+      { type: "video", title: "Redis in 100 Seconds", source: "YouTube · Fireship", duration: "2 min", url: "https://www.youtube.com/watch?v=G1rOthIU-uo", videoId: "G1rOthIU-uo" } as any,
+      { type: "video", title: "Redis Crash Course", source: "YouTube · Traversy Media", duration: "40 min", url: "https://www.youtube.com/watch?v=jgpVdJB2sKQ", videoId: "jgpVdJB2sKQ" } as any,
     ],
     quiz: {
       question: "When should you use a cache?",
@@ -144,7 +145,8 @@ export const modules: Module[] = [
     completedAt: null,
     description: "Queries, mutations, subscriptions, and schema design. Replace over-fetching REST endpoints with precise GraphQL.",
     resources: [
-      { type: "video", title: "GraphQL Full Course", source: "YouTube · freeCodeCamp", duration: "3 hrs", url: "#" },
+      { type: "video", title: "GraphQL in 100 Seconds", source: "YouTube · Fireship", duration: "2 min", url: "https://www.youtube.com/watch?v=eIQh02xuVw4", videoId: "eIQh02xuVw4" } as any,
+      { type: "course", title: "GraphQL Full Course", source: "YouTube · freeCodeCamp", duration: "4 hr", url: "https://www.youtube.com/watch?v=ed8SzALpx1Q", videoId: "ed8SzALpx1Q" } as any,
     ],
     quiz: {
       question: "What problem does GraphQL primarily solve?",
@@ -159,7 +161,8 @@ export const modules: Module[] = [
     completedAt: null,
     description: "Generics, utility types, strict mode, discriminated unions. Be immediately productive in any TypeScript codebase.",
     resources: [
-      { type: "docs", title: "TypeScript Deep Dive", source: "gitbook.io/basarat", duration: "2 hrs", url: "#" },
+      { type: "video", title: "TypeScript in 100 Seconds", source: "YouTube · Fireship", duration: "2 min", url: "https://www.youtube.com/watch?v=zQnBQ4tB3ZA", videoId: "zQnBQ4tB3ZA" } as any,
+      { type: "course", title: "TypeScript Full Course for Beginners", source: "YouTube · Dave Gray", duration: "8 hr", url: "https://www.youtube.com/watch?v=gieEQFIfgYc", videoId: "gieEQFIfgYc" } as any,
     ],
     quiz: {
       question: "What does a TypeScript generic enable?",

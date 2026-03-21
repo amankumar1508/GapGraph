@@ -44,12 +44,19 @@ export default function DashboardPage() {
     : staticSkills;
 
   const skillGaps = isDynamic
-    ? (analysisResult.skillGaps || []).map((g: any) => ({
-        name: g.skill,
-        currentLevel: Math.round(g.currentLevel * 100),
-        requiredLevel: Math.round(g.requiredLevel * 100),
-        priority: g.gapSize > 0.4 ? "critical" : g.gapSize > 0.2 ? "medium" : "low"
-      }))
+    ? (analysisResult.skillGaps || []).map((g: any) => {
+        // Backend returns skillGaps as string[] of skill names
+        const name = typeof g === 'string' ? g : (g.skill || g.name || g);
+        const currentLevel = typeof g === 'object' ? Math.round((g.currentLevel || 0.1) * 100) : 15;
+        const requiredLevel = typeof g === 'object' ? Math.round((g.requiredLevel || 0.85) * 100) : 85;
+        const gapSize = typeof g === 'object' ? (g.gapSize || 0.5) : 0.5;
+        return {
+          name,
+          currentLevel,
+          requiredLevel,
+          priority: gapSize > 0.4 ? "critical" as const : gapSize > 0.2 ? "medium" as const : "low" as const
+        };
+      })
     : staticGaps;
 
   // Derive simple counts
@@ -299,7 +306,7 @@ export default function DashboardPage() {
             <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
               {existingSkills.map((skill: any, i: number) => (
                 <motion.div
-                  key={skill.name}
+                  key={`${skill.name}-${i}`}
                   initial={{ opacity: 0, x: -20 }}
                   animate={mounted ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: i * 0.1 }}
@@ -333,7 +340,7 @@ export default function DashboardPage() {
                 const p = priorityColors[gap.priority];
                 return (
                   <motion.div
-                    key={gap.name}
+                    key={`${gap.name}-${i}`}
                     initial={{ opacity: 0, x: 20 }}
                     animate={mounted ? { opacity: 1, x: 0 } : {}}
                     transition={{ delay: i * 0.08 }}

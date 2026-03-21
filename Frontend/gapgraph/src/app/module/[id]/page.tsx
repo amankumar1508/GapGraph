@@ -62,12 +62,15 @@ export default function ModuleDetailPage() {
     }
   })) : rawModules;
 
-  const mod = modulesDb.find((m: any) => m.id === moduleId);
+  const mod = modulesDb.find((m: any) => m.id === moduleId) 
+    || modulesDb[moduleId - 1]  // Fallback: use index-based lookup
+    || staticModules.find((m: any) => m.id === moduleId); // Fallback: use static modules
 
   if (!mod) {
     return (
       <div className="max-w-7xl mx-auto px-6 pt-32 text-center">
         <h1 className="text-3xl font-bold text-on-surface">Module not found</h1>
+        <p className="text-on-surface-variant mt-2">Module ID {moduleId} could not be loaded.</p>
         <button onClick={() => router.push("/roadmap")} className="mt-6 text-primary hover:underline">
           ← Back to Roadmap
         </button>

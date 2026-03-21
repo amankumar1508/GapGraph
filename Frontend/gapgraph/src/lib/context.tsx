@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useCallback, ReactNode } from "react";
+import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect } from "react";
 
 interface AppContextType {
   completedModules: Set<number>;
@@ -25,6 +25,44 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [uploadedFiles, setUploadedFiles] = useState<{ resume: File | null; jd: File | null }>({ resume: null, jd: null });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<any>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  // Load state from localStorage on mount
+  useEffect(() => {
+    try {
+      const storedLogin = localStorage.getItem("gg_isLoggedIn");
+      if (storedLogin) setIsLoggedIn(JSON.parse(storedLogin));
+
+      const storedAnalysis = localStorage.getItem("gg_analysisResult");
+      if (storedAnalysis) setAnalysisResult(JSON.parse(storedAnalysis));
+
+      const storedModules = localStorage.getItem("gg_completedModules");
+      if (storedModules) setCompletedModules(new Set(JSON.parse(storedModules)));
+    } catch (e) {
+      console.error("Error loading state from localStorage", e);
+    }
+    setIsInitialized(true);
+  }, []);
+
+  // Save state to localStorage on changes
+  useEffect(() => {
+    if (!isInitialized) return;
+    localStorage.setItem("gg_isLoggedIn", JSON.stringify(isLoggedIn));
+  }, [isLoggedIn, isInitialized]);
+
+  useEffect(() => {
+    if (!isInitialized) return;
+    if (analysisResult) {
+      localStorage.setItem("gg_analysisResult", JSON.stringify(analysisResult));
+    } else {
+      localStorage.removeItem("gg_analysisResult");
+    }
+  }, [analysisResult, isInitialized]);
+
+  useEffect(() => {
+    if (!isInitialized) return;
+    localStorage.setItem("gg_completedModules", JSON.stringify(Array.from(completedModules)));
+  }, [completedModules, isInitialized]);
 
   const totalModules = analysisResult?.learningPath?.nodes?.length || 7;
   const overallProgress = Math.round((completedModules.size / Math.max(1, totalModules)) * 100);
