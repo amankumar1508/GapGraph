@@ -125,6 +125,9 @@ export class DiagnoserService {
             }
             if (!Array.isArray(parsed.technical)) parsed.technical = [];
             if (!Array.isArray(parsed.soft)) parsed.soft = [];
+            // Filter out any entries with missing skill names
+            parsed.technical = parsed.technical.filter(s => s && typeof s.skill === 'string' && s.skill.length > 0);
+            parsed.soft = parsed.soft.filter(s => s && typeof s.skill === 'string' && s.skill.length > 0);
             
         } catch (e) {
             tracer.addStep(

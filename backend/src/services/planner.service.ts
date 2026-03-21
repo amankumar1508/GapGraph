@@ -40,6 +40,7 @@ export class PlannerService {
         // Build a reverse index: skill → courses that teach it
         for (const course of this.catalog) {
             for (const skill of course.skillsCovered) {
+                if (!skill) continue;
                 const normalized = skill.toLowerCase().trim();
                 if (!this.skillToCourseMap.has(normalized)) {
                     this.skillToCourseMap.set(normalized, []);

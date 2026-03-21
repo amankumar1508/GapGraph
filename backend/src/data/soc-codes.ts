@@ -97,6 +97,7 @@ export const SOC_CODE_MAP: Record<string, { code: string; title: string }> = {
 };
 
 export function mapSkillToSOC(skill: string): { code: string; title: string } | null {
+    if (!skill) return null;
     const normalized = skill.toLowerCase().trim();
     return SOC_CODE_MAP[normalized] || null;
 }
