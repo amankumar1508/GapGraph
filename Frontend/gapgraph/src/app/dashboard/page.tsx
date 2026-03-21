@@ -33,7 +33,7 @@ const priorityColors: Record<string, { bg: string; text: string; label: string }
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { analysisResult, user } = useApp();
+  const { analysisResult, isLoggedIn } = useApp();
   const [mounted, setMounted] = useState(false);
   const [animatedScore, setAnimatedScore] = useState(0);
 
@@ -231,15 +231,15 @@ export default function DashboardPage() {
             Skill Gap Report / {dummyUser.targetRole}
           </h1>
           <p className="text-on-surface-variant">
-            {user ? (
-              <>Welcome back, <span className="text-secondary font-bold">{user.name}</span></>
+            {isLoggedIn ? (
+              <>Welcome back, <span className="text-secondary font-bold">{dummyUser.name}</span></>
             ) : (
               <>Viewing as Guest. <span className="text-secondary font-bold">Sign up</span> to save your progress.</>
             )}
           </p>
         </div>
         <div className="flex flex-wrap gap-4">
-          {!user && (
+          {!isLoggedIn && (
             <>
               <button onClick={() => router.push("/login")} className="px-6 py-3 rounded-xl border border-primary text-primary hover:bg-primary/10 transition-all text-sm font-bold flex items-center gap-2">
                 Log In
