@@ -183,9 +183,9 @@ async function main() {
             console.log("📄  EXTRACTED RESUME SKILLS");
             console.log("==================================================");
             console.log(`🔧 Technical Skills (${resumeSkills.technical.length}):`);
-            resumeSkills.technical.forEach(s => console.log(`   - ${s.skill.padEnd(25)} | Confidence: ${(s.confidence * 100).toFixed(1).padStart(5)}% | SOC: ${s.socCode || 'N/A'}`));
+            resumeSkills.technical.forEach(s => console.log(`   - ${(s.skill || 'unknown').padEnd(25)} | Confidence: ${(s.confidence * 100).toFixed(1).padStart(5)}% | SOC: ${s.socCode || 'N/A'}`));
             console.log(`\n💬 Soft Skills (${resumeSkills.soft.length}):`);
-            resumeSkills.soft.forEach(s => console.log(`   - ${s.skill.padEnd(25)} | Confidence: ${(s.confidence * 100).toFixed(1).padStart(5)}% | SOC: ${s.socCode || 'N/A'}`));
+            resumeSkills.soft.forEach(s => console.log(`   - ${(s.skill || 'unknown').padEnd(25)} | Confidence: ${(s.confidence * 100).toFixed(1).padStart(5)}% | SOC: ${s.socCode || 'N/A'}`));
             console.log("==================================================\n");
 
             tracer.addStep(
@@ -199,9 +199,9 @@ async function main() {
             console.log("🎯  EXTRACTED JOB DESCRIPTION SKILLS");
             console.log("==================================================");
             console.log(`🔧 Technical Skills (${jdSkills.technical.length}):`);
-            jdSkills.technical.forEach(s => console.log(`   - ${s.skill.padEnd(25)} | Confidence: ${(s.confidence * 100).toFixed(1).padStart(5)}% | SOC: ${s.socCode || 'N/A'}`));
+            jdSkills.technical.forEach(s => console.log(`   - ${(s.skill || 'unknown').padEnd(25)} | Confidence: ${(s.confidence * 100).toFixed(1).padStart(5)}% | SOC: ${s.socCode || 'N/A'}`));
             console.log(`\n💬 Soft Skills (${jdSkills.soft.length}):`);
-            jdSkills.soft.forEach(s => console.log(`   - ${s.skill.padEnd(25)} | Confidence: ${(s.confidence * 100).toFixed(1).padStart(5)}% | SOC: ${s.socCode || 'N/A'}`));
+            jdSkills.soft.forEach(s => console.log(`   - ${(s.skill || 'unknown').padEnd(25)} | Confidence: ${(s.confidence * 100).toFixed(1).padStart(5)}% | SOC: ${s.socCode || 'N/A'}`));
             console.log("==================================================\n");
 
             // ==========================================
@@ -215,11 +215,11 @@ async function main() {
             const resumeSkillNames = [
                 ...resumeSkills.technical.map((s) => s.skill),
                 ...resumeSkills.soft.map((s) => s.skill),
-            ];
+            ].filter((s): s is string => typeof s === 'string' && s.length > 0);
             const jdSkillNames = [
                 ...jdSkills.technical.map((s) => s.skill),
                 ...jdSkills.soft.map((s) => s.skill),
-            ];
+            ].filter((s): s is string => typeof s === 'string' && s.length > 0);
 
             const skillGaps = planner.identifyGaps(
                 resumeSkillNames,
